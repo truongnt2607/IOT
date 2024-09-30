@@ -23,7 +23,16 @@ const DivideController = (props) => {
         <Switch
           className="scale-150 mr-[40px]"
           onClick={() => {
-            props.set((prev) => !prev);
+            fetch("http://localhost:8080/api/control", {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+              body: JSON.stringify({
+                device: props.title,
+                action: props.index ? "OFF" : "ON",
+              }),
+            }).then(props.set((prev) => !prev));
           }}
           defaultValue={props.index}
         />

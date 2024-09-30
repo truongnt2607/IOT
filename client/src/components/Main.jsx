@@ -100,6 +100,18 @@ const Main = () => {
             on="light-on.png"
             off="light-off.png"
             title="Light"
+            onClick={() =>
+              fetch("http://localhost:8080/api/control", {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                method: "POST",
+                body: JSON.stringify({
+                  device: "Fan",
+                  action: fan,
+                }),
+              })
+            }
           />
         </div>
         <div className="col-span-6 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
