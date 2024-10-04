@@ -14,8 +14,14 @@ mqttClient.on("connect", () => {
 
 router.post("/api/control", (req, res) => {
   const { device, action } = req.body;
-  console.log(device, action);
-  res.send("Sussesfully!");
+  const message = device + " " + action;
+  mqttClient.publish("data_sensor", message, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Published with message:", message);
+    }
+  });
 });
 
 export default router;

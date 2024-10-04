@@ -55,7 +55,7 @@ const columns = [
 ];
 
 const DataSensor = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   useEffect(() => {
     fetch("http://localhost:8080/api/data-sensor")
       .then((res) => res.json())
