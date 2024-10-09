@@ -30,7 +30,7 @@ const DivideController = (props) => {
               method: "POST",
               body: JSON.stringify({
                 device: props.title,
-                action: props.index ? "OFF" : "ON",
+                action: props.index ? "Off" : "On",
               }),
             }).then(props.set((prev) => !prev));
           }}
