@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const DataSchema = new Schema({
-  _id: mongoose.Schema.ObjectId,
+  _id: Number,
   temperature: Number,
   humidity: Number,
   light: Number,

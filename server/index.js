@@ -12,7 +12,7 @@ app.use(express.json());
 ConnectDB();
 
 //route
-app.use("/api/data-sensor", dataRouter);
+// app.use("/api/data-sensor", dataRouter);
 app.use("/api/control", controlRouter);
 
 const PORT = process.env.PORT || 8080;

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import EmailIcon from "@mui/icons-material/Email";
 import { Link, useLocation } from "react-router-dom";
 
 const Account = () => {
