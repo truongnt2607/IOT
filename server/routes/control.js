@@ -5,7 +5,7 @@ import getCurrentTime from "../controller/getCurrentTime.js";
 
 const router = Router();
 
-const mqttClient = mqtt.connect("mqtt://192.168.112.50", {
+const mqttClient = mqtt.connect("http://localhost:1893", {
   username: "Nguyen_Trong_Truong",
   password: "B21DCCN740",
   port: 1893,

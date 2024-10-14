@@ -40,8 +40,13 @@ client.on("message", async (topic, message) => {
 const router = Router();
 
 router.get("/", async (req, res) => {
+  const data = await DataSensor.find().sort({ _id: -1 }).limit(5);
+  res.status(200).json(data);
+});
+
+router.get("/all", async (req, res) => {
   const data = await DataSensor.find({});
-  res.json(data);
+  res.status(200).json(data);
 });
 
 export default router;

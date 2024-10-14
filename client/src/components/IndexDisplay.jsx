@@ -8,13 +8,13 @@ const IndexDisplay = (props) => {
         <props.icon
           sx={{
             fontSize: 48,
-            opacity: props.index[4] / 100,
+            opacity: props.index / 100,
             color: props.color,
           }}
         />
         <div className="w-16 h-16">
           <props.circle
-            percent={props.index[4]}
+            percent={props.index}
             strokeWidth={10}
             strokeColor="#2b5ce3"
             trailWidth={10}
@@ -22,7 +22,7 @@ const IndexDisplay = (props) => {
         </div>
       </div>
       <div className="ml-5 text-2xl font-semibold">
-        {props.title} {props.index[4]}°C
+        {props.title} {props.index}°C
       </div>
     </div>
   );

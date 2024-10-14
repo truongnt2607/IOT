@@ -8,7 +8,7 @@
 // Cấu hình WiFi và MQTT
 #define WIFI_SSID "Tai Khoan Giong Mat Khau"  // Tên của Wifi 
 #define WIFI_PASSWORD "mkgiongtk"  // Mật khẩu của Wifi 19218854
-#define MQTT_HOST IPAddress(192, 168, 112, 50)  // Địa chỉ IP của MQTT broker
+#define MQTT_HOST IPAddress(192, 168, 240, 50)  // Địa chỉ IP của MQTT broker
 #define MQTT_PORT 1893  // POST của mosquitto
 #define MQTT_USERNAME "Nguyen_Trong_Truong" // Tài khoản mosquitto
 #define MQTT_PASSWORD "B21DCCN740"  // Mật khẩu mosquitto
@@ -187,7 +187,7 @@ void setup() {
 void loop() {
   // Đo và publish dữ liệu mỗi 10 giây
   static unsigned long lastMillis = 0;
-  if (millis() - lastMillis > 360000) {
+  if (millis() - lastMillis > 10000) {
     lastMillis = millis();
     publishSensorData();
   }

@@ -57,7 +57,7 @@ const columns = [
 const DataSensor = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8080/api/data-sensor")
+    fetch("http://localhost:8080/api/data-sensor/all")
       .then((res) => res.json())
       .then((resData) => setData(resData));
   }, []);
