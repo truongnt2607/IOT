@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MUIDataTable from "mui-datatables";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // const data = [
 //   [1, "Light", "On", "30/08/2024 21:44"],
@@ -75,7 +76,7 @@ const columns = [
 ];
 
 const Devices = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   useEffect(() => {
     fetch("http://localhost:8080/api/control")
       .then((res) => res.json())
@@ -84,13 +85,17 @@ const Devices = () => {
   return (
     <div className="col-span-6 row-span-7">
       <div className="w-full h-full flex justify-center items-center">
-        <MUIDataTable
-          title={"Devices"}
-          data={data}
-          columns={columns}
-          options={options}
-          className="w-[95%]"
-        />
+        {data && data.length > 0 ? (
+          <MUIDataTable
+            title={"Devices"}
+            data={data}
+            columns={columns}
+            options={options}
+            className="w-[95%]"
+          />
+        ) : (
+          <CircularProgress />
+        )}
       </div>
     </div>
   );

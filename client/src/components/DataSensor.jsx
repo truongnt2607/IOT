@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import MUIDataTable from "mui-datatables";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const options = {
   print: false,
   download: false,
-  rowsPerPageOptions: [10],
+  rowsPerPageOptions: [9],
+  rowsPerPage: 9,
   selectableRowsHeader: false,
   selectableRows: "none",
-  tableBodyHeight: "600px",
+  tableBodyHeight: "550px",
   jumpToPage: true,
 };
 
@@ -69,10 +71,12 @@ const DataSensor = () => {
       .then((res) => res.json())
       .then((resData) => setData(resData));
   }, []);
+  const dustThresholdCount = data.filter((item) => item.dust > 800).length;
   return (
     <div className="col-span-6 row-span-7">
-      <div className="w-full h-full flex justify-center items-center">
-        {data ? (
+      <div className="w-full h-full flex flex-col items-center">
+        <div className="p-2 my-3 bg-red-400 rounded-md text-center">{`Số lần độ bụi vượt ngưỡng 800: ${dustThresholdCount}`}</div>
+        {data && data.length > 0 ? (
           <MUIDataTable
             title={"Data Sensor"}
             data={data}
@@ -81,7 +85,7 @@ const DataSensor = () => {
             className="w-[95%] shadow-full"
           />
         ) : (
-          <></>
+          <CircularProgress />
         )}
       </div>
     </div>

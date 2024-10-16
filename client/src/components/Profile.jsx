@@ -34,7 +34,7 @@ const Profile = () => {
             </div>
             <div className="flex">
               <div className="w-[300px]">Github:</div>
-              <a href="https://github.com/truongnt2607/IoT">
+              <a href="https://github.com/truongnt2607/IOT">
                 <GitHubIcon />
               </a>
             </div>
@@ -62,17 +62,17 @@ const Profile = () => {
             Telecommunications Institute of Technology
           </div>
           <div className="flex absolute gap-3 top-[550px]">
-            <a href="">
+            <a href="/">
               <FacebookIcon sx={{ fontSize: "48px" }} />
             </a>
-            <a href="">
+            <a href="/">
               <InstagramIcon sx={{ fontSize: "48px" }} />
             </a>
-            <a href="">
+            <a href="/">
               {" "}
               <EmailIcon sx={{ fontSize: "48px" }} />
             </a>
-            <a href="">
+            <a href="/">
               <YouTubeIcon sx={{ fontSize: "48px" }} />
             </a>
           </div>

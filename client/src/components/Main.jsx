@@ -5,6 +5,7 @@ import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import AirIcon from "@mui/icons-material/Air";
 import { ToastContainer, toast } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress";
 import "react-toastify/dist/ReactToastify.css";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { memo } from "react";
@@ -54,110 +55,113 @@ const Main = () => {
   return data && data.length > 0 ? (
     <div className="col-span-6 row-span-6 rounded-lg drop-shadow-xl shadow-xl flex justify-center items-center">
       <ToastContainer />
-
-      <div className="w-[95%] h-[95%] grid grid-cols-12 grid-rows-8 gap-4">
-        <IndexDisplay
-          icon={DeviceThermostatIcon}
-          circle={Circle}
-          index={data[0].temperature}
-          title="Temperature"
-          color="#b91c1c"
-          unit="°C"
-        />
-        <IndexDisplay
-          icon={WaterDropIcon}
-          circle={Circle}
-          index={data[0].humidity}
-          title="Humidity"
-          color="#1d4ed8"
-          unit="%"
-        />
-        <IndexDisplay
-          icon={LightModeIcon}
-          // circle={Circle}
-          index={data[0].light}
-          title="Light"
-          color="#facc15"
-          unit="Lx"
-        />
-        <IndexDisplay
-          icon={AirIcon}
-          // circle={Circle}
-          index={data[0].dust}
-          title="Dust"
-          color="#666666"
-          unit="µg/m³"
-        />
-        <div className="col-span-5 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
-          <LineChart
-            className="shadow-full rounded-lg"
-            xAxis={[
-              { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] },
-            ]}
-            series={[
-              {
-                data: data.map((record) => record.temperature).reverse(),
-                label: "Temperature",
-                color: "#b91c1c",
-              },
-              {
-                data: data.map((record) => record.humidity).reverse(),
-                label: "Humidity",
-                color: "#1d4ed8",
-              },
-              {
-                data: data.map((record) => record.light).reverse(),
-                label: "Light",
-                color: "#facc15",
-              },
-            ]}
+      {data && data.length > 0 ? (
+        <div className="w-[95%] h-[95%] grid grid-cols-12 grid-rows-8 gap-4">
+          <IndexDisplay
+            icon={DeviceThermostatIcon}
+            circle={Circle}
+            index={data[0].temperature}
+            title="Temperature"
+            color="#b91c1c"
+            unit="°C"
           />
-        </div>
-        <div className="col-span-5 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
-          <LineChart
-            className="shadow-full rounded-lg"
-            xAxis={[
-              { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] },
-            ]}
-            series={[
-              {
-                data: data.map((record) => record.dust).reverse(),
-                label: "Dust",
-                color: "#666666",
-              },
-            ]}
+          <IndexDisplay
+            icon={WaterDropIcon}
+            circle={Circle}
+            index={data[0].humidity}
+            title="Humidity"
+            color="#1d4ed8"
+            unit="%"
           />
-        </div>
-        <div className="col-span-2 row-span-7 grid grid-rows-3 gap-4">
-          <DivideController
-            index={air}
-            set={handleSetAir}
-            on="air-conditioner-on.png"
-            off="air-conditioner-off.png"
-            title="Air Conditioner"
+          <IndexDisplay
+            icon={LightModeIcon}
+            // circle={Circle}
+            index={data[0].light}
+            title="Light"
+            color="#facc15"
+            unit="Lx"
           />
-          <DivideController
-            index={fan}
-            set={handleSetFan}
-            on="fan.png"
-            title="Fan"
+          <IndexDisplay
+            icon={AirIcon}
+            // circle={Circle}
+            index={data[0].dust}
+            title="Dust"
+            color="#666666"
+            unit="µg/m³"
           />
-          <DivideController
-            index={refri}
-            set={handleSetRefri}
-            on="refrigerator-on.png"
-            off="refrigerator-off.png"
-            title="Refrigerator"
-          />
-          {/* <DivideController
+          <div className="col-span-5 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
+            <LineChart
+              className="shadow-full rounded-lg"
+              xAxis={[
+                { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] },
+              ]}
+              series={[
+                {
+                  data: data.map((record) => record.temperature).reverse(),
+                  label: "Temperature",
+                  color: "#b91c1c",
+                },
+                {
+                  data: data.map((record) => record.humidity).reverse(),
+                  label: "Humidity",
+                  color: "#1d4ed8",
+                },
+                {
+                  data: data.map((record) => record.light).reverse(),
+                  label: "Light",
+                  color: "#facc15",
+                },
+              ]}
+            />
+          </div>
+          <div className="col-span-5 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
+            <LineChart
+              className="shadow-full rounded-lg"
+              xAxis={[
+                { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] },
+              ]}
+              series={[
+                {
+                  data: data.map((record) => record.dust).reverse(),
+                  label: "Dust",
+                  color: "#666666",
+                },
+              ]}
+            />
+          </div>
+          <div className="col-span-2 row-span-7 grid grid-rows-3 gap-4">
+            <DivideController
+              index={air}
+              set={handleSetAir}
+              on="air-conditioner-on.png"
+              off="air-conditioner-off.png"
+              title="Air Conditioner"
+            />
+            <DivideController
+              index={fan}
+              set={handleSetFan}
+              on="fan.png"
+              title="Fan"
+            />
+            <DivideController
+              index={refri}
+              set={handleSetRefri}
+              on="refrigerator-on.png"
+              off="refrigerator-off.png"
+              title="Refrigerator"
+            />
+            {/* <DivideController
             index={lig}
             set={handleSetLig}
             on="light-on.png"
             off="light-off.png"
             title="Light"
           /> */}
+          </div>
         </div>
-      </div>
+      ) : (
+        <CircularProgress />
+      )}
     </div>
   ) : (
     <></>
