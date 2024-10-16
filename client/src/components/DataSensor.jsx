@@ -45,6 +45,14 @@ const columns = [
     },
   },
   {
+    name: "dust",
+    label: "Dust",
+    options: {
+      filter: true,
+      sort: true,
+    },
+  },
+  {
     name: "time",
     label: "Time",
     options: {

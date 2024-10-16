@@ -8,7 +8,7 @@ import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <div className="w-full h-screen relative font-be font-bold">
+    <div className="w-full h-screen relative font-be font-bold overflow-hidden">
       <div className="w-full h-full grid grid-cols-7 grid-rows-7">
         <Menu />
         <Account />

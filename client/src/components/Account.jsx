@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Link, useLocation } from "react-router-dom";
 
 const Account = () => {
@@ -25,7 +24,7 @@ const Account = () => {
         <div className="mt-3">Dashboard/ {tab}</div>
       </div>
       <div className="flex items-center mr-11">
-        <NotificationsIcon className="mr-6 text-AEAEAE" />
+        {/* <NotificationsIcon className="mr-6 text-AEAEAE" /> */}
         <Link to="/profile">
           <img
             alt="avt"

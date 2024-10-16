@@ -21,6 +21,7 @@
 #define LED_PIN1 D5       // Thiết lập chân D5 làm đầu ra
 #define LED_PIN2 D6       // Thiết lập chân D6 làm đầu ra
 #define LED_PIN3 D7       // Thiết lập chân D7 làm đầu ra
+#define LED_PIN4 D2       // Thiết lập chân D2 làm đầu ra
 #define LIGHT_SENSOR_PIN D1  // Chân kết nối cảm biến ánh sáng (DO)
 
 DHT dht(DHTPIN, DHTTYPE);
@@ -109,19 +110,6 @@ void onMqttMessage(char* topic, char* payload, AsyncMqttClientMessageProperties 
     if(doc["device"] == "Light"){
       digitalWrite(LED_PIN3, doc["action"] == "On" ? HIGH : LOW);
     }
-
-  // if (doc.containsKey("Fan")) {
-  //   digitalWrite(LED_PIN1, doc["Fan"] == "ON" ? HIGH : LOW);
-  // }
-  // if (doc.containsKey("Light")) {
-  //   digitalWrite(LED_PIN2, doc["Light"] == "ON" ? HIGH : LOW);
-  // }
-  // if (doc.containsKey("Refrigerator")) {
-  //   digitalWrite(LED_PIN3, doc["Refrigerator"] == "ON" ? HIGH : LOW);
-  // }
-  // if (doc.containsKey("Air Conditioner")) {
-  //   digitalWrite(LED_PIN3, doc["Air Conditioner"] == "ON" ? HIGH : LOW);
-  // }
 }
 
 
@@ -130,6 +118,7 @@ void publishSensorData() {
   float temperature = dht.readTemperature();
   float humidity = dht.readHumidity();
   int lightSensorValue = digitalRead(LIGHT_SENSOR_PIN);
+  int dust = random(0, 1001);
 
   // Kiểm tra xem dữ liệu DHT11 có hợp lệ không
   if (isnan(temperature) || isnan(humidity)) {
@@ -140,13 +129,15 @@ void publishSensorData() {
   // Chuẩn bị dữ liệu để publish
   String payload = String("{\"temperature\":") + String(temperature) + 
                    String(",\"humidity\":") + String(humidity) + 
-                   String(",\"light\":") + String(lightSensorValue)  +  String("}");
+                   String(",\"light\":") + String(lightSensorValue) +
+                   String(",\"dust\":") + String(dust)  +  String("}");
   // Gửi dữ liệu lên Server bằng API
   char jsonData[512];
   StaticJsonDocument<200> doc;
   doc["temperature"] = temperature;
   doc["humidity"] = humidity;
   doc["light"] = lightSensorValue;
+  doc["dust"] = dust;
   serializeJson(doc, jsonData);
   
   // HTTPClient http;
@@ -159,6 +150,14 @@ void publishSensorData() {
   if(mqttClient.publish(MQTT_TOPIC, 0, false, jsonData)) {
   Serial.print("Dữ liệu đã publish: ");
   Serial.println(payload);
+    if(dust >= 800) {
+      for (int i = 1; i <= 10; i++) {
+        digitalWrite(LED_PIN4, HIGH);  // Bật đèn LED
+        delay(300);
+        digitalWrite(LED_PIN4, LOW);  // Bật đèn LED
+        delay(300);
+      }
+    }
   }
 }
 
@@ -179,15 +178,17 @@ void setup() {
   pinMode(LED_PIN1, OUTPUT);  // Thiết lập chân D5 làm đầu ra
   pinMode(LED_PIN2, OUTPUT);  // Thiết lập chân D6 làm đầu ra
   pinMode(LED_PIN3, OUTPUT);  // Thiết lập chân D7 làm đầu ra
+  pinMode(LED_PIN4, OUTPUT);  // Thiết lập chân D2 làm đầu ra
   digitalWrite(LED_PIN1, LOW);  // Bật đèn LED
   digitalWrite(LED_PIN2, LOW);  // Bật đèn LED
   digitalWrite(LED_PIN3, LOW);  // Bật đèn LED
+  digitalWrite(LED_PIN4, LOW);  // Bật đèn LED
 }
 
 void loop() {
   // Đo và publish dữ liệu mỗi 10 giây
   static unsigned long lastMillis = 0;
-  if (millis() - lastMillis > 10000) {
+  if (millis() - lastMillis > 8000) {
     lastMillis = millis();
     publishSensorData();
   }

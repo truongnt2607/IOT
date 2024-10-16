@@ -3,7 +3,7 @@ import { memo } from "react";
 
 const IndexDisplay = (props) => {
   return (
-    <div className="col-span-2 row-span-2 bg-white bg-opacity-50 rounded-lg shadow-full">
+    <div className="col-span-3 row-span-2 bg-white bg-opacity-50 rounded-lg shadow-full">
       <div className="flex justify-between m-4">
         <props.icon
           sx={{
@@ -13,16 +13,20 @@ const IndexDisplay = (props) => {
           }}
         />
         <div className="w-16 h-16">
-          <props.circle
-            percent={props.index}
-            strokeWidth={10}
-            strokeColor="#2b5ce3"
-            trailWidth={10}
-          />
+          {props.circle ? (
+            <props.circle
+              percent={props.index}
+              strokeWidth={10}
+              strokeColor="#2b5ce3"
+              trailWidth={10}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className="ml-5 text-2xl font-semibold">
-        {props.title} {props.index}°C
+        {props.title} : {props.index} {props.unit}
       </div>
     </div>
   );

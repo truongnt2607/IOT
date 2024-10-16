@@ -6,6 +6,7 @@ const DataSchema = new Schema({
   humidity: Number,
   light: Number,
   time: String,
+  dust: Number,
 });
 
 export default mongoose.model("DataSensor", DataSchema);

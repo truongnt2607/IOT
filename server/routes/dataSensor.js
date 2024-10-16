@@ -40,7 +40,7 @@ client.on("message", async (topic, message) => {
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const data = await DataSensor.find().sort({ _id: -1 }).limit(5);
+  const data = await DataSensor.find().sort({ _id: -1 }).limit(15);
   res.status(200).json(data);
 });
 
