@@ -14,9 +14,9 @@ import DivideController from "./DivideController";
 
 const Main = () => {
   const [data, setData] = useState([]);
-  const [air, setAir] = useState(false);
-  const [fan, setFan] = useState(false);
-  const [refri, setRefri] = useState(false);
+  const [air, setAir] = useState();
+  const [fan, setFan] = useState();
+  const [refri, setRefri] = useState();
 
   // Using useCallback to memoize handlers
   const handleSetAir = useCallback(() => setAir((prev) => !prev), []);
@@ -24,6 +24,37 @@ const Main = () => {
   const handleSetRefri = useCallback(() => setRefri((prev) => !prev), []);
 
   useEffect(() => {
+    fetch("http://localhost:8080/api/control/now")
+      .then((res) => res.json())
+      .then((data) => {
+        data.forEach((device) => {
+          switch (device.device) {
+            case "Fan":
+              if (device.action === "On") {
+                setFan(true);
+              } else {
+                setFan(false);
+              }
+              break;
+            case "Refrigerator":
+              if (device.action === "On") {
+                setRefri(true);
+              } else {
+                setRefri(false);
+              }
+              break;
+            case "Air Conditioner":
+              if (device.action === "On") {
+                setAir(true);
+              } else {
+                setAir(false);
+              }
+              break;
+            default:
+              break;
+          }
+        });
+      });
     const fetchData = () => {
       fetch("http://localhost:8080/api/data-sensor")
         .then((res) => res.json())

@@ -34,7 +34,7 @@ const DivideController = (props) => {
               }),
             }).then(props.set((prev) => !prev));
           }}
-          defaultValue={props.index}
+          checked={props.index}
         />
       </div>
     </div>

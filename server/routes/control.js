@@ -37,4 +37,26 @@ router.get("/", async (req, res) => {
   res.status(200).json(data);
 });
 
+router.get("/now", async (req, res) => {
+  try {
+    const latestStates = await Control.aggregate([
+      { $match: { device: { $ne: "Light" } } }, // Loại bỏ thiết bị "Light"
+      { $sort: { _id: -1 } }, // Sắp xếp theo _id giảm dần (mới nhất trước)
+      {
+        $group: {
+          _id: "$device", // Nhóm theo tên thiết bị
+          latestRecord: { $first: "$$ROOT" }, // Lấy toàn bộ bản ghi mới nhất theo _id
+        },
+      },
+      {
+        $replaceRoot: { newRoot: "$latestRecord" }, // Thay thế root bằng bản ghi mới nhất
+      },
+    ]);
+    res.status(200).json(latestStates); // Trả về kết quả đã sắp xếp và lọc
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error retrieving device states" });
+  }
+});
+
 export default router;
