@@ -61,7 +61,7 @@ const Main = () => {
         .then((data) => {
           setData(data);
 
-          if (data[0].dust > 800) {
+          if (data[0].dust > 80) {
             toast.error("Dust level is too high!", {
               className: "fixed top-[-120px] right-0",
               position: "top-right",
@@ -120,7 +120,7 @@ const Main = () => {
             color="#666666"
             unit="µg/m³"
           />
-          <div className="col-span-5 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
+          <div className="col-span-10 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
             <LineChart
               className="shadow-full rounded-lg"
               xAxis={[
@@ -145,7 +145,7 @@ const Main = () => {
               ]}
             />
           </div>
-          <div className="col-span-5 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
+          {/* <div className="col-span-5 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
             <LineChart
               className="shadow-full rounded-lg"
               xAxis={[
@@ -159,7 +159,7 @@ const Main = () => {
                 },
               ]}
             />
-          </div>
+          </div> */}
           <div className="col-span-2 row-span-7 grid grid-rows-3 gap-4">
             <DivideController
               index={air}

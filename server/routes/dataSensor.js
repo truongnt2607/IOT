@@ -1,23 +1,14 @@
 import { Router } from "express";
 import DataSensor from "../models/DataSensor.js";
 import getCurrentTime from "../controller/getCurrentTime.js";
-import mqtt from "mqtt";
+import client from "../ConnectMQTT.js";
 
-const client = mqtt.connect("http://localhost:1893", {
-  username: "Nguyen_Trong_Truong",
-  password: "B21DCCN740",
-});
-
-client.on("connect", () => {
-  console.log("Connected to MQTT broker");
-
-  client.subscribe("data_sensor", (err) => {
-    if (!err) {
-      console.log(`Subscribed to topic: data_sensor`);
-    } else {
-      console.error("Subscription error:", err);
-    }
-  });
+client.subscribe("data_sensor", (err) => {
+  if (!err) {
+    console.log(`Subscribed to topic: data_sensor`);
+  } else {
+    console.error("Subscription error:", err);
+  }
 });
 
 client.on("message", async (topic, message) => {

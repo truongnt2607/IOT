@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Switch from "@mui/material/Switch";
 import { memo } from "react";
+import { io } from "socket.io-client";
 
 const DivideController = (props) => {
+  const socketRef = useRef(null);
+  useEffect(() => {
+    socketRef.current = io("http://localhost:8081");
+
+    socketRef.current.on("control_update", (data) => {
+      console.log("Received control_update:", data);
+      if (data.device === props.title) {
+        props.set((prev) => !prev);
+      }
+    });
+
+    return () => {
+      socketRef.current.disconnect();
+    };
+  }, []);
+
+  const handleClick = () => {
+    fetch("http://localhost:8080/api/control", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        device: props.title,
+        action: props.index ? "Off" : "On",
+      }),
+    });
+  };
   return (
     <div className="row-span-1 bg-white bg-opacity-50 rounded-lg shadow-full">
       <div className="h-full flex justify-between items-center">
@@ -22,18 +51,7 @@ const DivideController = (props) => {
         </div>
         <Switch
           className="scale-125 mr-[10px]"
-          onClick={() => {
-            fetch("http://localhost:8080/api/control", {
-              headers: {
-                "Content-Type": "application/json",
-              },
-              method: "POST",
-              body: JSON.stringify({
-                device: props.title,
-                action: props.index ? "Off" : "On",
-              }),
-            }).then(props.set((prev) => !prev));
-          }}
+          onClick={handleClick}
           checked={props.index}
         />
       </div>

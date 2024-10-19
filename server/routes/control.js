@@ -1,19 +1,11 @@
 import { json, Router } from "express";
-import mqtt from "mqtt";
 import Control from "../models/Control.js";
 import getCurrentTime from "../controller/getCurrentTime.js";
+import client from "../ConnectMQTT.js";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 const router = Router();
-
-const mqttClient = mqtt.connect("http://localhost:1893", {
-  username: "Nguyen_Trong_Truong",
-  password: "B21DCCN740",
-  port: 1893,
-});
-
-mqttClient.on("connect", () => {
-  console.log("Connected to MQTT Broker");
-});
 
 router.post("/", async (req, res) => {
   const message = req.body;
@@ -23,11 +15,17 @@ router.post("/", async (req, res) => {
     ...message,
     time: getCurrentTime(),
   });
-  mqttClient.publish("control_led", JSON.stringify(message), (err) => {
+  client.publish("control_led", JSON.stringify(message), (err) => {
     if (err) {
       console.log(err);
     } else {
-      newControl.save().then(res.status(200).send("Sussessfully!"));
+      console.log("Publishing to topic: contro_led");
+      newControl.save().then(() => {
+        req.io.emit("control_update", message);
+        res
+          .status(200)
+          .send("Successfully controlled and notified via Socket.io!");
+      });
     }
   });
 });
@@ -36,6 +34,8 @@ router.get("/", async (req, res) => {
   const data = await Control.find({});
   res.status(200).json(data);
 });
+
+router.get("/");
 
 router.get("/now", async (req, res) => {
   try {

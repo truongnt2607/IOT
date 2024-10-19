@@ -118,7 +118,7 @@ void publishSensorData() {
   float temperature = dht.readTemperature();
   float humidity = dht.readHumidity();
   int lightSensorValue = digitalRead(LIGHT_SENSOR_PIN);
-  int dust = random(0, 1001);
+  int dust = random(0, 101);
 
   // Kiểm tra xem dữ liệu DHT11 có hợp lệ không
   if (isnan(temperature) || isnan(humidity)) {
@@ -150,7 +150,7 @@ void publishSensorData() {
   if(mqttClient.publish(MQTT_TOPIC, 0, false, jsonData)) {
   Serial.print("Dữ liệu đã publish: ");
   Serial.println(payload);
-    if(dust >= 800) {
+    if(dust >= 80) {
       for (int i = 1; i <= 10; i++) {
         digitalWrite(LED_PIN4, HIGH);  // Bật đèn LED
         delay(300);

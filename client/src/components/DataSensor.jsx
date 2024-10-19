@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import MUIDataTable from "mui-datatables";
 import CircularProgress from "@mui/material/CircularProgress";
+import MUIDataTable from "mui-datatables";
 
 const options = {
   print: false,
   download: false,
-  rowsPerPageOptions: [9],
   rowsPerPage: 9,
   selectableRowsHeader: false,
   selectableRows: "none",
   tableBodyHeight: "550px",
   jumpToPage: true,
+  responsive: "vertical",
+  filter: false,
 };
 
 const columns = [
@@ -18,7 +19,7 @@ const columns = [
     name: "_id",
     label: "ID",
     options: {
-      filter: true,
+      filtering: true,
       sort: true,
     },
   },
@@ -58,7 +59,7 @@ const columns = [
     name: "time",
     label: "Time",
     options: {
-      filter: true,
+      filter: false,
       sort: true,
     },
   },
@@ -71,11 +72,11 @@ const DataSensor = () => {
       .then((res) => res.json())
       .then((resData) => setData(resData));
   }, []);
-  const dustThresholdCount = data.filter((item) => item.dust > 800).length;
+  const dustThresholdCount = data.filter((item) => item.dust > 80).length;
   return (
     <div className="col-span-6 row-span-7">
       <div className="w-full h-full flex flex-col items-center">
-        <div className="p-2 my-3 bg-red-400 rounded-md text-center">{`Số lần độ bụi vượt ngưỡng 800: ${dustThresholdCount}`}</div>
+        <div className="p-2 my-3 bg-red-400 rounded-md text-center">{`Số lần độ bụi vượt ngưỡng 80: ${dustThresholdCount}`}</div>
         {data && data.length > 0 ? (
           <MUIDataTable
             title={"Data Sensor"}
