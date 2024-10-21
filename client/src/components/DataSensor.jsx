@@ -8,10 +8,11 @@ const options = {
   rowsPerPage: 9,
   selectableRowsHeader: false,
   selectableRows: "none",
-  tableBodyHeight: "550px",
+  tableBodyHeight: "570px",
   jumpToPage: true,
   responsive: "vertical",
-  filter: false,
+  filter: true,
+  filterType: "textField",
 };
 
 const columns = [
@@ -19,8 +20,9 @@ const columns = [
     name: "_id",
     label: "ID",
     options: {
-      filtering: true,
+      filter: true,
       sort: true,
+      filterType: "textField",
     },
   },
   {
@@ -59,7 +61,7 @@ const columns = [
     name: "time",
     label: "Time",
     options: {
-      filter: false,
+      filter: true,
       sort: true,
     },
   },

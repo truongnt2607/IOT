@@ -33,11 +33,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 const options = {
   print: false,
   download: false,
-  rowsPerPageOptions: [10],
+  rowsPerPage: 10,
   selectableRowsHeader: false,
   selectableRows: "none",
   tableBodyHeight: "600px",
   jumpToPage: true,
+  responsive: "vertical",
+  filter: true,
+  filterType: "textField",
 };
 
 const columns = [
