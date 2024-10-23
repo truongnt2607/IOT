@@ -123,23 +123,46 @@ const Main = () => {
             <LineChart
               className="shadow-full rounded-lg"
               xAxis={[
-                { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] },
+                {
+                  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+                  axisLine: { show: true },
+                  axisLabel: { show: true },
+                },
+              ]}
+              yAxis={[
+                {
+                  type: "value",
+                  name: "Temperature/Humidity",
+                  position: "left",
+                  axisLine: { show: true },
+                  axisLabel: { show: true },
+                },
+                {
+                  type: "value",
+                  name: "Light",
+                  position: "right",
+                  axisLine: { show: true },
+                  axisLabel: { show: true },
+                },
               ]}
               series={[
                 {
                   data: data.map((record) => record.temperature).reverse(),
                   label: "Temperature",
                   color: "#b91c1c",
+                  yAxisIndex: 0,
                 },
                 {
                   data: data.map((record) => record.humidity).reverse(),
                   label: "Humidity",
                   color: "#1d4ed8",
+                  yAxisIndex: 0,
                 },
                 {
                   data: data.map((record) => record.light).reverse(),
                   label: "Light",
                   color: "#facc15",
+                  yAxisIndex: 1,
                 },
               ]}
             />

@@ -108,7 +108,7 @@ void onMqttMessage(char* topic, char* payload, AsyncMqttClientMessageProperties 
       digitalWrite(LED_PIN3, doc["action"] == "On" ? HIGH : LOW);
     }
     if(doc["device"] == "Light"){
-      digitalWrite(LED_PIN3, doc["action"] == "On" ? HIGH : LOW);
+      digitalWrite(LED_PIN4, doc["action"] == "On" ? HIGH : LOW);
     }
 }
 
@@ -117,7 +117,7 @@ void onMqttMessage(char* topic, char* payload, AsyncMqttClientMessageProperties 
 void publishSensorData() {
   float temperature = dht.readTemperature();
   float humidity = dht.readHumidity();
-  int lightSensorValue = analogRead(LIGHT_SENSOR_PIN);
+  int lightSensorValue = (1023 - analogRead(LIGHT_SENSOR_PIN))*10;
   int dust = random(0, 101);
 
   // Kiểm tra xem dữ liệu DHT11 có hợp lệ không
@@ -150,7 +150,7 @@ void publishSensorData() {
   if(mqttClient.publish(MQTT_TOPIC, 0, false, jsonData)) {
   Serial.print("Dữ liệu đã publish: ");
   Serial.println(payload);
-    if(dust >= 80) {
+    if(dust >= 70) {
       for (int i = 1; i <= 10; i++) {
         digitalWrite(LED_PIN4, HIGH);  // Bật đèn LED
         delay(300);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import MUIDataTable from "mui-datatables";
+import getCurrentTime from "./getCurrentDate";
 
 const options = {
   print: false,
@@ -74,11 +75,17 @@ const DataSensor = () => {
       .then((res) => res.json())
       .then((resData) => setData(resData));
   }, []);
-  const dustThresholdCount = data.filter((item) => item.dust > 80).length;
+  const currentDay = getCurrentTime();
+  console.log(currentDay);
+  const dustThresholdCount = data.filter((item) => {
+    return (
+      item.dust > 70 && item.time.split(" ")[0] === currentDay.split(" ")[0]
+    );
+  }).length;
   return (
     <div className="col-span-6 row-span-7">
       <div className="w-full h-full flex flex-col items-center">
-        <div className="p-2 my-3 bg-red-400 rounded-md text-center">{`Số lần độ bụi vượt ngưỡng 80: ${dustThresholdCount}`}</div>
+        <div className="p-2 my-3 bg-red-400 rounded-md text-center">{`Số lần độ bụi vượt ngưỡng 70: ${dustThresholdCount}`}</div>
         {data && data.length > 0 ? (
           <MUIDataTable
             title={"Data Sensor"}

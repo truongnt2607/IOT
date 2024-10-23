@@ -30,7 +30,7 @@ const Menu = () => {
         } ease-in-out hover:text-xanh hover:bg-F0F7FF flex flex-row gap-4 cursor-pointer items-center p-2 rounded-lg w-[180px] pl-4`}
       >
         <NoteIcon sx={{ fontSize: 30 }} className="" />
-        <div>NewPage</div>
+        <div>New Page</div>
       </Link>
       <Link
         to="/datasensor"
