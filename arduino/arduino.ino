@@ -22,7 +22,7 @@
 #define LED_PIN2 D6       // Thiết lập chân D6 làm đầu ra
 #define LED_PIN3 D7       // Thiết lập chân D7 làm đầu ra
 #define LED_PIN4 D2       // Thiết lập chân D2 làm đầu ra
-#define LIGHT_SENSOR_PIN D1  // Chân kết nối cảm biến ánh sáng (DO)
+#define LIGHT_SENSOR_PIN A0  // Chân kết nối cảm biến ánh sáng (AO)
 
 DHT dht(DHTPIN, DHTTYPE);
 AsyncMqttClient mqttClient;
@@ -117,7 +117,7 @@ void onMqttMessage(char* topic, char* payload, AsyncMqttClientMessageProperties 
 void publishSensorData() {
   float temperature = dht.readTemperature();
   float humidity = dht.readHumidity();
-  int lightSensorValue = digitalRead(LIGHT_SENSOR_PIN);
+  int lightSensorValue = analogRead(LIGHT_SENSOR_PIN);
   int dust = random(0, 101);
 
   // Kiểm tra xem dữ liệu DHT11 có hợp lệ không

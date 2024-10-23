@@ -4,6 +4,7 @@ import Main from "./components/Main";
 import DataSensor from "./components/DataSensor";
 import Devices from "./components/Devices";
 import Profile from "./components/Profile";
+import NewPage from "./components/NewPage";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/datasensor" element={<DataSensor />} />
+          <Route path="/newpage" element={<NewPage />} />
           <Route path="/devices" element={<Devices />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>

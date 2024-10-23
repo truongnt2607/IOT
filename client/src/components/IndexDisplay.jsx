@@ -3,7 +3,7 @@ import { memo } from "react";
 
 const IndexDisplay = (props) => {
   return (
-    <div className="col-span-3 row-span-2 bg-white bg-opacity-50 rounded-lg shadow-full">
+    <div className="col-span-4 row-span-2 bg-white bg-opacity-50 rounded-lg shadow-full">
       <div className="flex justify-between m-4">
         <props.icon
           sx={{

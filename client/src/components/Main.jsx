@@ -3,8 +3,8 @@ import { Circle } from "rc-progress";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import AirIcon from "@mui/icons-material/Air";
-import { ToastContainer, toast } from "react-toastify";
+// import AirIcon from "@mui/icons-material/Air";
+// import { ToastContainer, toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import "react-toastify/dist/ReactToastify.css";
 import { LineChart } from "@mui/x-charts/LineChart";
@@ -60,20 +60,19 @@ const Main = () => {
         .then((res) => res.json())
         .then((data) => {
           setData(data);
-
-          if (data[0].dust > 80) {
-            toast.error("Dust level is too high!", {
-              className: "fixed top-[-120px] right-0",
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          }
+          // if (data[0].dust > 80) {
+          //   toast.error("Dust level is too high!", {
+          //     className: "fixed top-[-120px] right-0",
+          //     position: "top-right",
+          //     autoClose: 2000,
+          //     hideProgressBar: false,
+          //     closeOnClick: true,
+          //     pauseOnHover: true,
+          //     draggable: true,
+          //     progress: undefined,
+          //     theme: "light",
+          //   });
+          // }
         });
     };
     fetchData();
@@ -85,7 +84,7 @@ const Main = () => {
 
   return data && data.length > 0 ? (
     <div className="col-span-6 row-span-6 rounded-lg drop-shadow-xl shadow-xl flex justify-center items-center">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       {data && data.length > 0 ? (
         <div className="w-[95%] h-[95%] grid grid-cols-12 grid-rows-8 gap-4">
           <IndexDisplay
@@ -112,14 +111,14 @@ const Main = () => {
             color="#facc15"
             unit="Lx"
           />
-          <IndexDisplay
+          {/* <IndexDisplay
             icon={AirIcon}
             // circle={Circle}
             index={data[0].dust}
             title="Dust"
             color="#666666"
             unit="µg/m³"
-          />
+          /> */}
           <div className="col-span-10 row-span-7 bg-white bg-opacity-50 rounded-lg flex justify-center items-center">
             <LineChart
               className="shadow-full rounded-lg"

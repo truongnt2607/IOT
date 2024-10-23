@@ -23,7 +23,7 @@ client.on("message", async (topic, message) => {
     };
     const newDataSensor = new DataSensor(data);
     await newDataSensor.save();
-    console.log("save done!");
+    console.log(`Save: ${newDataSensor}`);
   } catch (err) {
     console.error(err);
   }
