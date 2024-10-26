@@ -188,7 +188,7 @@ void setup() {
 void loop() {
   // Đo và publish dữ liệu mỗi 10 giây
   static unsigned long lastMillis = 0;
-  if (millis() - lastMillis > 8000) {
+  if (millis() - lastMillis > 1000) {
     lastMillis = millis();
     publishSensorData();
   }

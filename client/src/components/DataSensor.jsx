@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import MUIDataTable from "mui-datatables";
 import getCurrentTime from "./getCurrentDate";
+import Table from "./Table";
 
 const options = {
   print: false,
@@ -87,13 +88,14 @@ const DataSensor = () => {
       <div className="w-full h-full flex flex-col items-center">
         <div className="p-2 my-3 bg-red-400 rounded-md text-center">{`Số lần độ bụi vượt ngưỡng 70: ${dustThresholdCount}`}</div>
         {data && data.length > 0 ? (
-          <MUIDataTable
-            title={"Data Sensor"}
-            data={data}
-            columns={columns}
-            options={options}
-            className="w-[95%] shadow-full"
-          />
+          // <MUIDataTable
+          //   title={"Data Sensor"}
+          //   data={data}
+          //   columns={columns}
+          //   options={options}
+          //   className="w-[95%] shadow-full"
+          //   />
+          <Table />
         ) : (
           <CircularProgress />
         )}

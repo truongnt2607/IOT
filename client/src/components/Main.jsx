@@ -78,7 +78,7 @@ const Main = () => {
     fetchData();
     const intervalData = setInterval(() => {
       fetchData();
-    }, 8000);
+    }, 1000);
     return () => clearInterval(intervalData);
   }, []);
 

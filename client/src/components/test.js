@@ -1,3 +1,3 @@
-import getCurrentTime from "./components/getCurrentDate";
-
-console.log(getCurrentTime());
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}

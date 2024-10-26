@@ -69,7 +69,7 @@ const NewPage = () => {
             toast.error("Dust level is too high!", {
               className: "fixed top-[-120px] right-0",
               position: "top-right",
-              autoClose: 2000,
+              autoClose: 1000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
@@ -83,7 +83,7 @@ const NewPage = () => {
     fetchData();
     const intervalData = setInterval(() => {
       fetchData();
-    }, 8000);
+    }, 1000);
     return () => clearInterval(intervalData);
   }, []);
 
