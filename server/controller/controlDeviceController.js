@@ -30,9 +30,7 @@ const getCurrentStatus = async (req, res) => {
 
 const postControlHistory = async (req, res) => {
   const message = req.body;
-  const newestControl = await Control.find({}).sort({ _id: -1 }).limit(1);
   const newControl = new Control({
-    _id: newestControl[0]._id + 1,
     ...message,
     time: getCurrentTime(),
   });

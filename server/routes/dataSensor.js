@@ -15,9 +15,7 @@ client.subscribe("data_sensor", (err) => {
 client.on("message", async (topic, message) => {
   try {
     const jsonData = JSON.parse(message.toString());
-    const newestData = await DataSensor.find({}).sort({ _id: -1 }).limit(1);
     const data = {
-      _id: newestData[0]._id + 1,
       ...jsonData,
       time: getCurrentTime(),
     };
@@ -33,6 +31,6 @@ const router = Router();
 
 router.get("/", dataSensorController.get15DataSensor);
 
-router.get("/all", dataSensorController.getAllDataSensor);
+router.get("/all", dataSensorController.getDataSensor);
 
 export default router;
