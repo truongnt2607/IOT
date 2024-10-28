@@ -18,6 +18,7 @@ const DivideController = (props) => {
     return () => {
       socketRef.current.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClick = () => {
@@ -36,16 +37,20 @@ const DivideController = (props) => {
     <div className="row-span-1 bg-white bg-opacity-50 rounded-lg shadow-full">
       <div className="h-full flex justify-between items-center">
         <div className="h-full flex justify-around flex-col ml-[20px]">
-          {props.off ? (
-            props.index ? (
-              <img src={props.on} alt="" className="w-12" />
+          {!props.flashing ? (
+            props.off ? (
+              props.index ? (
+                <img src={props.on} alt="" className="w-12" />
+              ) : (
+                <img src={props.off} alt="" className="w-12" />
+              )
+            ) : props.index ? (
+              <img src={props.on} alt="" className="w-12 animate-spin -ml-1" />
             ) : (
-              <img src={props.off} alt="" className="w-12" />
+              <img src={props.on} alt="" className="w-12 -ml-1" />
             )
-          ) : props.index ? (
-            <img src={props.on} alt="" className="w-12 animate-spin -ml-1" />
           ) : (
-            <img src={props.on} alt="" className="w-12 -ml-1" />
+            <img src={props.on} alt="" className="w-12 animate-pulse-custom" />
           )}
           <div>{props.title}</div>
         </div>

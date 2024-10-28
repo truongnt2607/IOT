@@ -3,6 +3,16 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      animation: {
+        "pulse-custom": "pulse-custom 1.5s ease-in-out infinite",
+      },
+      keyframes: {
+        "pulse-custom": {
+          "0%": { opacity: 1 },
+          "50%": { opacity: 0.2 },
+          "100%": { opacity: 1 },
+        },
+      },
       translate: {
         "2/1": "-50%",
       },

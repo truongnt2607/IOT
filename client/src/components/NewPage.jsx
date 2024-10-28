@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { ToastContainer, toast } from "react-toastify";
+// import { ToastContainer, toast } from "react-toastify";
 import { Circle } from "rc-progress";
 import IndexDisplay from "./IndexDisplay";
 import DivideController from "./DivideController";
@@ -14,6 +14,8 @@ const NewPage = () => {
   const [light, setLight] = useState();
   //   const [fan, setFan] = useState();
   //   const [refri, setRefri] = useState();
+
+  const [flashing, setFlashing] = useState(false);
 
   // Using useCallback to memoize handlers
   const handleSetLight = useCallback(() => setLight((prev) => !prev), []);
@@ -65,18 +67,21 @@ const NewPage = () => {
         .then((data) => {
           setData(data);
 
-          if (data[0].dust > 80) {
-            toast.error("Dust level is too high!", {
-              className: "fixed top-[-120px] right-0",
-              position: "top-right",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+          if (data[0].dust > 70) {
+            // toast.error("Dust level is too high!", {
+            //   className: "fixed top-[-120px] right-0",
+            //   position: "top-right",
+            //   autoClose: 1000,
+            //   hideProgressBar: false,
+            //   closeOnClick: true,
+            //   pauseOnHover: true,
+            //   draggable: true,
+            //   progress: undefined,
+            //   theme: "light",
+            // });
+            setFlashing(true);
+          } else {
+            setFlashing(false);
           }
         });
     };
@@ -89,7 +94,7 @@ const NewPage = () => {
 
   return data && data.length > 0 ? (
     <div className="col-span-6 row-span-6 rounded-lg drop-shadow-xl shadow-xl flex justify-center items-center">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       {data && data.length > 0 ? (
         <div className="w-[95%] h-[95%] grid grid-cols-12 grid-rows-8 gap-4">
           <IndexDisplay
@@ -123,6 +128,7 @@ const NewPage = () => {
               on="light-on.png"
               off="light-off.png"
               title="Light"
+              flashing={flashing}
             />
           </div>
         </div>
