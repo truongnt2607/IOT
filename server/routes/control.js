@@ -5,7 +5,7 @@ const router = Router();
 
 router.post("/", controlDeviceController.postControlHistory);
 
-router.get("/", controlDeviceController.getAllControlHistory);
+router.get("/", controlDeviceController.getControlHistory);
 
 router.get("/now", controlDeviceController.getCurrentStatus);
 

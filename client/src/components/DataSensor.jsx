@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import getCurrentTime from "./getCurrentDate";
-import SearchIcon from "@mui/icons-material/Search";
 import { Pagination } from "antd";
+import SearchIcon from "@mui/icons-material/Search";
+
+import getCurrentTime from "./getCurrentDate";
+import useDebouce from "../hooks/useDebounce";
 
 const DataSensor = () => {
   const [page, setPage] = useState(1);
@@ -12,9 +14,11 @@ const DataSensor = () => {
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
 
+  const debouce = useDebouce(keyword, 500);
+
   const options = [
     { label: "---", value: "" },
-    { label: "ID", value: "_id" },
+    { label: "ID", value: "id" },
     { label: "Temperature", value: "temperature" },
     { label: "Humidity", value: "humidity" },
     { label: "Light", value: "light" },
@@ -22,18 +26,22 @@ const DataSensor = () => {
     { label: "Time", value: "time" },
   ];
 
-  const fetchData = (page) => {
-    let URL = `http://localhost:8080/api/data-sensor/all?page=${page}`;
-    if (keyword && field) URL += `&keyword=${keyword}&field=${field}`;
-    if (sortField) URL += `&sortField=${sortField}&sortOrder=${sortOrder}`;
+  const fetchData = useCallback(
+    (page) => {
+      let URL = `http://localhost:8080/api/data-sensor/all?page=${page}`;
+      if (keyword) URL += `&keyword=${debouce}`;
+      if (field !== "") URL += `&field=${field}`;
+      if (sortField) URL += `&sortField=${sortField}&sortOrder=${sortOrder}`;
 
-    fetch(URL)
-      .then((res) => res.json())
-      .then((resData) => {
-        console.log(resData);
-        setData(resData);
-      });
-  };
+      fetch(URL)
+        .then((res) => res.json())
+        .then((resData) => {
+          setData(resData);
+        });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [field, debouce, sortField, sortOrder]
+  );
 
   const handleSearch = () => {
     fetchData(page);
@@ -41,7 +49,7 @@ const DataSensor = () => {
 
   useEffect(() => {
     fetchData(page);
-  }, [page, sortField, sortOrder]);
+  }, [page, sortField, sortOrder, fetchData]);
 
   const currentDay = getCurrentTime();
   const dustThresholdCount =
@@ -77,7 +85,10 @@ const DataSensor = () => {
                     onChange={(e) => setKeyword(e.target.value)}
                   />
                   <select
-                    onChange={(e) => setField(e.target.value)}
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      setField(e.target.value);
+                    }}
                     className="bg-transparent mr-3 focus:outline-none font-light"
                   >
                     {options.map((option) => (

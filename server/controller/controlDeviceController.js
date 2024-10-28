@@ -2,9 +2,52 @@ import Control from "../models/Control.js";
 import client from "../ConnectMQTT.js";
 import getCurrentTime from "./getCurrentTime.js";
 
-const getAllControlHistory = async (req, res) => {
-  const data = await Control.find({});
-  res.status(200).json(data);
+const pageSize = 10;
+
+const getControlHistory = async (req, res) => {
+  let { page = 1, keyword, field, sortField, sortOrder } = req.query;
+  page = parseInt(page) < 1 ? 1 : parseInt(page);
+  try {
+    let query = {};
+    if (keyword) {
+      if (field) {
+        if (["device", "action", "time"].includes(field)) {
+          query[field] = { $regex: keyword.replace(/-/g, " "), $options: "i" };
+        } else if (field === "_id") {
+          query[field] = parseInt(keyword);
+        }
+        console.log(query);
+      } else {
+        query = {
+          $or: [
+            { id: parseInt(keyword) },
+            { device: { $regex: keyword.replace(/-/g, " "), $options: "i" } },
+            { action: { $regex: keyword.replace(/-/g, " "), $options: "i" } },
+            { time: { $regex: keyword.replace(/-/g, " "), $options: "i" } },
+          ],
+        };
+      }
+    }
+    let sort = {};
+    if (sortField && sortOrder) {
+      sort[sortField] = sortOrder === "desc" ? -1 : 1;
+    }
+    const totalData = await Control.countDocuments(query);
+    const totalPage = Math.ceil(totalData / pageSize);
+    const data = await Control.find(query)
+      .sort(sort)
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    res.json({
+      data: [...data],
+      currentPage: page,
+      totalPage: totalPage,
+      totalData: totalData,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi xử lý yêu cầu", error });
+  }
 };
 
 const getCurrentStatus = async (req, res) => {
@@ -49,4 +92,8 @@ const postControlHistory = async (req, res) => {
   });
 };
 
-export default { postControlHistory, getAllControlHistory, getCurrentStatus };
+export default {
+  postControlHistory,
+  getCurrentStatus,
+  getControlHistory,
+};

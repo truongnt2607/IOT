@@ -11,16 +11,27 @@ const getDataSensor = async (req, res) => {
   let { page = 1, keyword, field, sortField, sortOrder } = req.query;
   page = parseInt(page) < 1 ? 1 : parseInt(page);
   try {
-    const query = {};
-    if (keyword && field) {
-      if (field === "temperature") {
-        query[field] = parseFloat(keyword);
-      } else if (["humidity", "id", "dust", "light"].includes(field)) {
-        query[field] = parseInt(keyword);
-      } else if (field === "time") {
-        query[field] = { $regex: keyword.replace(/-/g, " "), $options: "i" };
+    let query = {};
+    if (keyword) {
+      if (field) {
+        if (field === "temperature") {
+          query[field] = parseFloat(keyword);
+        } else if (["humidity", "id", "dust", "light"].includes(field)) {
+          query[field] = parseInt(keyword);
+        } else if (field === "time") {
+          query[field] = { $regex: keyword.replace(/-/g, " "), $options: "i" };
+        }
       } else {
-        query[field] = { $regex: keyword, $options: "i" };
+        query = {
+          $or: [
+            { id: parseInt(keyword) },
+            { temperature: parseFloat(keyword) },
+            { humidity: parseInt(keyword) },
+            { dust: parseInt(keyword) },
+            { light: parseInt(keyword) },
+            { time: { $regex: keyword.replace(/-/g, " "), $options: "i" } },
+          ],
+        };
       }
     }
     let sort = {};
