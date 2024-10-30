@@ -4,6 +4,7 @@ import { Pagination } from "antd";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import useDebouce from "../hooks/useDebounce";
+import getCurrentTime from "../getCurrentDate";
 
 const options = [
   { label: "---", value: "" },
@@ -20,6 +21,7 @@ const Devices = () => {
   const [field, setField] = useState("");
   const [sortField, setSortField] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [count, setCount] = useState(0);
 
   const debouce = useDebouce(keyword, 500);
 
@@ -46,13 +48,26 @@ const Devices = () => {
 
   useEffect(() => {
     fetchData(page);
+    fetch("http://localhost:8080/api/data-sensor/count")
+      .then((res) => res.json())
+      .then((data) => setCount(data.count));
   }, [page, sortField, sortOrder, fetchData]);
+
+  const currentDay = getCurrentTime();
+  const dustThresholdCount =
+    data.data?.filter(
+      (item) =>
+        item.dust > 70 && item.time.split(" ")[0] === currentDay.split(" ")[0]
+    ).length || 0;
 
   return (
     <div className="col-span-6 row-span-7">
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-full flex-row justify-center items-center">
+        <div className="p-2 my-3 bg-red-400 rounded-md text-center w-[300px] mx-auto">
+          {`Số lần cảnh báo: ${count}`}
+        </div>
         {data.data ? (
-          <div className="w-[95%] h-[90%] rounded-md border-2 border-slate-200 mt-[40px]">
+          <div className="w-[95%] h-[90%] rounded-md border-2 border-slate-200 mt-[10px] mx-auto">
             <div className="w-full h-16 flex items-center">
               <div className="flex items-center">
                 <div className="border-[1px] rounded-2xl ml-[20px] border-black flex">

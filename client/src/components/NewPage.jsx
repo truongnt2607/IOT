@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { LineChart } from "@mui/x-charts/LineChart";
 // import { memo } from "react";
 import AirIcon from "@mui/icons-material/Air";
+import getCurrentTime from "../getCurrentDate";
 
 const NewPage = () => {
   const [data, setData] = useState([]);

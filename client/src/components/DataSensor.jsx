@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "antd";
 import SearchIcon from "@mui/icons-material/Search";
 
-import getCurrentTime from "./getCurrentDate";
+import getCurrentTime from "../getCurrentDate";
 import useDebouce from "../hooks/useDebounce";
 
 const DataSensor = () => {
@@ -61,11 +61,11 @@ const DataSensor = () => {
   return (
     <div className="col-span-6 row-span-7">
       <div className="w-full h-full flex flex-col items-center">
-        <div className="p-2 my-3 bg-red-400 rounded-md text-center">
+        {/* <div className="p-2 my-3 bg-red-400 rounded-md text-center">
           {`Số lần độ bụi vượt ngưỡng 70: ${dustThresholdCount}`}
-        </div>
+        </div> */}
         {data.data ? (
-          <div className="w-[95%] h-[90%] rounded-md border-2 border-slate-200">
+          <div className="w-[95%] h-[90%] rounded-md border-2 border-slate-200 mt-[60px]">
             <div className="w-full h-16 flex items-center">
               <div className="flex items-center">
                 <div className="border-[1px] rounded-2xl ml-[20px] border-black flex">

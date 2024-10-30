@@ -1,0 +1,247 @@
+{
+	"info": {
+		"_postman_id": "f3456c99-bd00-44c9-bc76-51f20ba391c2",
+		"name": "IoT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36844348"
+	},
+	"item": [
+		{
+			"name": "GetAllControl",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/control?page=1&keyword=12&field=time&sortField=time&sortOrder=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"control"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "keyword",
+							"value": "12"
+						},
+						{
+							"key": "field",
+							"value": "time",
+							"description": "include: null, device, action, time"
+						},
+						{
+							"key": "sortField",
+							"value": "time",
+							"description": "include: null, id, device, action, time"
+						},
+						{
+							"key": "sortOrder",
+							"value": "desc",
+							"description": "include: asc, desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostControl",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"device\": \"Fan\",\r\n    \"action\": \"On\",\r\n    \"time\": \"02/10/2024 19:23:04\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/control",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"control"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get15DataSensor",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/data-sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"data-sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDataSensorCount",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/data-sensor/count",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"data-sensor",
+						"count"
+					],
+					"query": [
+						{
+							"key": "field",
+							"value": "id",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDataSensor",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/data-sensor/all?page=1&keyword=01:&field=time&sortField=temperature&sortOrder=desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"data-sensor",
+						"all"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "keyword",
+							"value": "01:"
+						},
+						{
+							"key": "field",
+							"value": "time",
+							"description": "include: id, temperature, humidity, light, dust, time"
+						},
+						{
+							"key": "sortField",
+							"value": "temperature",
+							"description": "include: id, temperature, humidity, light, dust, time"
+						},
+						{
+							"key": "sortOrder",
+							"value": "desc",
+							"description": "include: asc, desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCurrentControl",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/control/now",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"control",
+						"now"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

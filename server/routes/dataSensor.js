@@ -33,4 +33,6 @@ router.get("/", dataSensorController.get15DataSensor);
 
 router.get("/all", dataSensorController.getDataSensor);
 
+router.get("/count", dataSensorController.getAllData);
+
 export default router;

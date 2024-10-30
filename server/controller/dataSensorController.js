@@ -1,10 +1,23 @@
 import DataSensor from "../models/DataSensor.js";
+import getCurrentTime from "./getCurrentTime.js";
 
 const pageSize = 10;
 
 const get15DataSensor = async (req, res) => {
   const data = await DataSensor.find().sort({ _id: -1 }).limit(15);
   res.status(200).json(data);
+};
+
+const getAllData = async (req, res) => {
+  const data = await DataSensor.find({});
+  const currentDay = getCurrentTime();
+  const dustThresholdCount = data.filter(
+    (item) =>
+      item.dust > 70 && item.time.split(" ")[0] === currentDay.split(" ")[0]
+  ).length;
+  res.json({
+    count: dustThresholdCount,
+  });
 };
 
 const getDataSensor = async (req, res) => {
@@ -56,4 +69,4 @@ const getDataSensor = async (req, res) => {
   }
 };
 
-export default { get15DataSensor, getDataSensor };
+export default { get15DataSensor, getDataSensor, getAllData };
